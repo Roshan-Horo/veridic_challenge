@@ -79,7 +79,7 @@ export default function Page(){
                     <div className="w-full bg-white shadow flex flex-col my-4 p-6">
                         <p className="text-xl font-semibold pb-5">Source from Tech Crunch</p>
                         <p className="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
-                        <a href={post.link} target={"_blank"} className="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
+                        <a href={post.link} rel="noreferrer" target="_blank" className="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
                         Go to Actual Post
                         </a>
                     </div>
