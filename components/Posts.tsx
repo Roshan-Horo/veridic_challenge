@@ -1,4 +1,6 @@
 import {PostType} from '../hooks/useGetPosts'
+import Render from './Render'
+import { useRouter } from 'next/router'
 
 /* This example requires Tailwind CSS v2.0+ */
 const datas = [
@@ -76,8 +78,10 @@ const datas = [
   },
 ]
 
-
 export default function Posts({ posts }: { posts: PostType[] | null}) {
+
+  const router = useRouter()
+
   return (
     <div className="relative bg-gray-50 px-4 pt-16 pb-20 sm:px-6 lg:px-8 lg:pt-24 lg:pb-28">
       <div className="absolute inset-0">
@@ -92,39 +96,41 @@ export default function Posts({ posts }: { posts: PostType[] | null}) {
         </div>
         <div className="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3 ">
           {posts?.map((post) => (
-            <div key={post.id} className="flex flex-col overflow-hidden rounded-lg shadow-lg hover:shadow-2xl cursor-pointer">
+            <div key={post.id} onClick={() => router.push(`/${post.id}`)} className="flex flex-col overflow-hidden rounded-lg shadow-lg hover:shadow-2xl cursor-pointer">
               <div className="flex-shrink-0">
                 <img className="h-48 w-full object-cover" src={post.parselyMeta['parsely-image-url']} alt="" />
               </div>
               <div className="flex flex-1 flex-col justify-between bg-white p-6">
                 <div className="flex-1">
                   <p className="text-sm font-medium text-indigo-600">
-                    <a href={post.jetpack_featured_media_url} className="hover:underline">
+                    <div className="hover:underline">
                       {post.type}
-                    </a>
+                    </div>
                   </p>
-                  <a href={post.link} className="mt-2 block">
-                    <p className="text-xl font-semibold text-gray-900">{post.title.rendered}</p>
-                    <p className="mt-3 text-base text-gray-500">{post.excerpt.rendered}</p>
-                  </a>
+                  <div className="mt-2 block">
+                    <p className="text-xl font-semibold text-gray-900" dangerouslySetInnerHTML={{__html: post.title.rendered}} />
+                    <p className="mt-3 text-base text-gray-500" dangerouslySetInnerHTML={{__html: post.excerpt.rendered}}  />
+                    {/* <Render>
+                      <p>{post.excerpt.rendered}</p>
+                    </Render> */}
+                  </div>
                 </div>
                 <div className="mt-6 flex items-center">
                   <div className="flex-shrink-0">
-                    <a href={post.jetpack_featured_media_url}>
+                    <div>
                       <span className="sr-only">{post.parselyMeta['parsely-author'][0]}</span>
                       <img className="h-10 w-10 rounded-full" src={'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'} alt="" />
-                    </a>
+                    </div>
                   </div>
                   <div className="ml-3">
                     <p className="text-sm font-medium text-gray-900">
-                      <a href={post.jetpack_featured_media_url} className="hover:underline">
+                      <div className="hover:underline">
                         {post.parselyMeta['parsely-author'][0]}
-                      </a>
+                      </div>
                     </p>
                     <div className="flex space-x-1 text-sm text-gray-500">
-                      <time dateTime={post.date}>{post.date}</time>
+                      <time dateTime={post.date}>{new Date(post.date).toDateString()}</time>
                       <span aria-hidden="true">&middot;</span>
-                      {/* <span>{post.readingTime} read</span> */}
                     </div>
                   </div>
                 </div>
